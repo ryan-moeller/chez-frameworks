@@ -153,20 +153,41 @@
   (define CFCalendarGetTimeRangeOfUnit
     (foreign-procedure "CFCalendarGetTimeRangeOfUnit"
 		       (CFCalendarRef CFCalendarUnit CFAbsoluteTime (* CFAbsoluteTime) (* CFAbsoluteTime)) Boolean))
-  ;; TODO: handle variadic...
-  (define CFCalendarComposeAbsoluteTime
-    (foreign-procedure (__varargs_after 3) "CFCalendarComposeAbsoluteTime"
-		       (CFCalendarRef (* CFAbsoluteTime) string) Boolean))
-  ;; TODO: handle variadic...
-  (define CFCalendarDecomposeAbsoluteTime
-    (foreign-procedure (__varargs_after 3) "CFCalendarDecomposeAbsoluteTime"
-		       (CFCalendarRef CFAbsoluteTime string) Boolean))
-  ;; TODO: handle variadic...
-  (define CFCalendarAddComponents
-    (foreign-procedure (__varargs_after 4) "CFCalendarAddComponents"
-		       (CFCalendarRef (* CFAbsoluteTime) CFOptionFlags string) Boolean))
-  ;; TODO: handle variadic...
-  (define CFCalendarGetComponentDifference
-    (foreign-procedure (__varargs_after 5) "CFCalendarGetComponentDifference"
-		       (CFCalendarRef CFAbsoluteTime CFAbsoluteTime CFOptionFlags string) Boolean))
+  ;; The functions below are variadic.  The types of the variadic parameters
+  ;; must be given before the variadic arguments begin, for example:
+  ;;   (CFCalendarComposeAbsoluteTime gregorian at "yMdHms" (int int int int int int) 1965 1 6 14 10 0)
+  ;; All types must be int.
+  ;; TODO: infer the variadic type list from the format string
+  (define-syntax CFCalendarComposeAbsoluteTime
+    (syntax-rules ()
+      [(_ calendar at componentDesc)
+       (CFCalendarComposeAbsoluteTime calendar at componentDesc ())]
+      [(_ calendar at componentDesc (t ...) e ...)
+       ((foreign-procedure (__varargs_after 3) "CFCalendarComposeAbsoluteTime"
+			   (CFCalendarRef (* CFAbsoluteTime) string t ...) Boolean)
+	calendar at componentDesc e ...)]))
+  (define-syntax CFCalendarDecomposeAbsoluteTime
+    (syntax-rules ()
+      [(_ calendar at componentDesc)
+       (CFCalendarDecomposeAbsoluteTime calendar at componentDesc ())]
+      [(_ calendar at componentDesc (t ...) e ...)
+       ((foreign-procedure (__varargs_after 3) "CFCalendarDecomposeAbsoluteTime"
+			   (CFCalendarRef CFAbsoluteTime string (* t) ...) Boolean)
+	calendar at componentDesc e ...)]))
+  (define-syntax CFCalendarAddComponents
+    (syntax-rules ()
+      [(_ calendar at options componentDesc)
+       (CFCalendarAddComponents calendar at options componentDesc ())]
+      [(_ calendar at options componentDesc (t ...) e ...)
+       ((foreign-procedure (__varargs_after 4) "CFCalendarAddComponents"
+			   (CFCalendarRef (* CFAbsoluteTime) CFOptionFlags string t ...) Boolean)
+	calendar at options componentDesc e ...)]))
+  (define-syntax CFCalendarGetComponentDifference
+    (syntax-rules ()
+      [(_ calendar start result options componentDesc)
+       (CFCalendarGetComponentDifference calendar start result options componentDesc ())]
+      [(_ calendar start result options componentDesc (t ...) e ...)
+       ((foreign-procedure (__varargs_after 5) "CFCalendarGetComponentDifference"
+			   (CFCalendarRef CFAbsoluteTime CFAbsoluteTime CFOptionFlags string (* t) ...) Boolean)
+	calendar start result options componentDesc e ...)]))
   )

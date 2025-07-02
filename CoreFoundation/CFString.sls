@@ -274,12 +274,6 @@
   (define CFStringAppendCharacters
     (foreign-procedure "CFStringAppendCharacters"
 		       (CFMutableStringRef (* UniChar) CFIndex) void))
-  (define CFStringAppendFormat
-    (foreign-procedure (__varargs_after 3) "CFStringAppendFormat"
-		       (CFMutableStringRef CFDictionaryRef CFStringRef) void))
-  ;(define CFStringAppendFormatAndArguments
-  ;  (foreign-procedure "CFStringAppendFormatAndArguments"
-  ; XXX no va_list FFI type
   (define CFStringAppendPascalString
     (foreign-procedure "CFStringAppendPascalString"
 		       (CFMutableStringRef ConstStr255Param CFStringEncoding) void))
@@ -340,12 +334,6 @@
   (define CFStringCreateMutableWithExternalCharactersNoCopy
     (foreign-procedure "CFStringCreateMutableWithExternalCharactersNoCopy"
 		       (CFAllocatorRef (* UniChar) CFIndex CFIndex CFAllocatorRef) CFMutableStringRef))
-  (define CFStringCreateStringWithValidatedFormat
-    (foreign-procedure (__varargs_after 5) "CFStringCreateStringWithValidatedFormat"
-		       (CFAllocatorRef CFDictionaryRef CFStringRef CFStringRef (* CFErrorRef)) CFStringRef))
-  ;(define CFStringCreateStringWithValidatefFormatAndArguments
-  ;  (foreign-procedure "CFStringCreateStringWithValidatedFormatAndArguments"
-  ; XXX no va_list FFI type
   (define CFStringCreateWithBytes
     (foreign-procedure "CFStringCreateWithBytes"
 		       (CFAllocatorRef u8* CFIndex CFStringEncoding Boolean) CFStringRef))
@@ -367,12 +355,6 @@
   (define CFStringCreateWithFileSystemRepresentation
     (foreign-procedure "CFStringCreateWithFileSystemRepresentation"
 		       (CFAllocatorRef string) CFStringRef)) ; XXX
-  (define CFStringCreateWithFormat
-    (foreign-procedure (__varargs_after 3) "CFStringCreateWithFormat"
-		       (CFAllocatorRef CFDictionaryRef CFStringRef) CFStringRef))
-  ;(define CFStringCreateWithFormatAndArguments
-  ;  (foreign-procedure "CFStringCreateWithFormatAndArguments"
-  ; XXX no va_list FFI type
   (define CFStringCreateWithPascalString
     (foreign-procedure "CFStringCreateWithPascalString"
 		       (CFAllocatorRef ConstStr255Param CFStringEncoding) CFStringRef))
@@ -533,4 +515,41 @@
   (define CFSTR
     (foreign-procedure "__CFStringMakeConstantString"
 		       (string) CFStringRef))
+  ;; The functions below are variadic.  The types of the variadic parameters
+  ;; must be given before the variadic arguments begin, for example:
+  ;;   (CFStringCreateWithFormat alloc formatOptions "%d %llu" (int unsigned-long-long) -42 #xf000f000f000f000)
+  ;; TODO: infer the variadic type list from the format string
+  (define-syntax CFStringAppendFormat
+    (syntax-rules ()
+      [(_ theString formatOptions format)
+       (CFStringAppendFormat theString formatOptions format ())]
+      [(_ theString formatOptions format (t ...) e ...)
+       ((foreign-procedure (__varargs_after 3) "CFStringAppendFormat"
+			   (CFMutableStringRef CFDictionaryRef CFStringRef t ...) void)
+	theString formatOptions format e ...)]))
+  ;(define CFStringAppendFormatAndArguments
+  ;  (foreign-procedure "CFStringAppendFormatAndArguments"
+  ; XXX no va_list FFI type
+  (define-syntax CFStringCreateStringWithValidatedFormat
+    (syntax-rules ()
+      [(_ alloc formatOptions validFormatSpecifiers format errorPtr)
+       (CFStringCreateStringWithValidatedFormat alloc formatOptions validFormatSpecifiers format errorPtr ())]
+      [(_ alloc formatOptions validFormatSpecifiers format errorPtr (t ...) e ...)
+       ((foreign-procedure (__varargs_after 5) "CFStringCreateStringWithValidatedFormat"
+			   (CFAllocatorRef CFDictionaryRef CFStringRef CFStringRef (* CFErrorRef) t ...) CFStringRef)
+	alloc formatOptions validFormatSpecifiers format errorPtr e ...)]))
+  ;(define CFStringCreateStringWithValidatedFormatAndArguments
+  ;  (foreign-procedure "CFStringCreateStringWithValidatedFormatAndArguments"
+  ; XXX no va_list FFI type
+  (define-syntax CFStringCreateWithFormat
+    (syntax-rules ()
+      [(_ alloc formatOptions format)
+       (CFStringCreateWithFormat alloc formatOptions format ())]
+      [(_ alloc formatOptions format (t ...) e ...)
+       ((foreign-procedure (__varargs_after 3) "CFStringCreateWithFormat"
+			   (CFAllocatorRef CFDictionaryRef CFStringRef t ...) CFStringRef)
+	alloc formatOptions format e ...)]))
+  ;(define CFStringCreateWithFormatAndArguments
+  ;  (foreign-procedure "CFStringCreateWithFormatAndArguments"
+  ; XXX no va_list FFI type
   )
