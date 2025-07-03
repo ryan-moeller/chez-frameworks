@@ -37,13 +37,13 @@
     SCPreferencesSetValue
     SCPreferencesRemoveValue
     SCPreferencesSetCallback
+    SCPreferencesScheduleWithRunLoop
+    SCPreferencesUnscheduleFromRunLoop
     SCPreferencesSynchronize)
   (import
     (chezscheme)
     (CoreFoundation)
-    (Security)
-    ;;(SystemConfiguration SCDynamicStore)
-    )
+    (Security))
 
   ;;---------------;;
   ;; SCPreferences ;;
@@ -121,8 +121,12 @@
   (define SCPreferencesSetCallback
     (foreign-procedure "SCPreferencesSetCallback"
 		       (SCPreferencesRef (* SCPreferencesCallBack) (* SCPreferencesContext)) Boolean))
-  ;; SCPreferencesScheduleWithRunLoop
-  ;; SCPreferencesUnscheduleFromRunLoop
+  (define SCPreferencesScheduleWithRunLoop
+    (foreign-procedure "SCPreferencesScheduleWithRunLoop"
+		       (SCPreferencesRef CFRunLoopRef CFStringRef) Boolean))
+  (define SCPreferencesUnscheduleFromRunLoop
+    (foreign-procedure "SCPreferencesUnscheduleFromRunLoop"
+		       (SCPreferencesRef CFRunLoopRef CFStringRef) Boolean))
   ;; SCPreferencesSetDispatchQueue
   (define SCPreferencesSynchronize
     (foreign-procedure "SCPreferencesSynchronize"
