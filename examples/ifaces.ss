@@ -36,9 +36,9 @@
     (define buf (make-bytevector (* (+ len 1) (ftype-sizeof UniChar)) 0))
     (lock-object buf)
     (let ([p (make-ftype-pointer UniChar (object->reference-address buf))])
-      (CFStringGetCharacters r range p)
-      (unlock-object buf)
-      (utf16->string buf (native-endianness)))))
+      (CFStringGetCharacters r range p))
+    (unlock-object buf)
+    (utf16->string buf (native-endianness))))
 (define Boolean->bool
   (lambda (b)
     (not (= 0 b))))
