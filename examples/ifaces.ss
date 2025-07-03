@@ -56,9 +56,12 @@
 		  (define mtu_min (ftype-alloc int))
 		  (define mtu_max (ftype-alloc int))
 		  (display (CFStringRef->string bsdname))
-		  (display " (")
-		  (display (CFStringRef->string mac))
-		  (display "): ")
+		  (if (= 0 mac)
+		    (display ": ")
+		    (begin
+		      (display " (")
+		      (display (CFStringRef->string mac))
+		      (display "): ")))
 		  (display (CFStringRef->string type))
 		  (if (Boolean->bool
 			(SCNetworkInterfaceCopyMTU iface mtu_cur mtu_min mtu_max))
