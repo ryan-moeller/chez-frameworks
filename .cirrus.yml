@@ -1,0 +1,14 @@
+task:
+  matrix:
+    - name: sequoia
+      macos_instance:
+        image: ghcr.io/cirruslabs/macos-runner:sequoia
+    - name: sonoma
+      macos_instance:
+        image: ghcr.io/cirruslabs/macos-runner:sonoma
+  setup_script:
+    - brew install chezscheme
+  test_script:
+    # XXX: It works without this on my machine, but not in CI?
+    - DYLD_FRAMEWORK_PATH=/System/Library/Frameworks
+      chez --script examples/ifaces.ss
