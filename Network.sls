@@ -27,6 +27,7 @@
     (load-shared-object "Network.framework/Network"))
 
   (export
+    (import (Network nw_object))
     (import (Network advertise_descriptor))
     (import (Network browser))
     (import (Network browse_result))
