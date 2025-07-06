@@ -68,6 +68,7 @@
     nw_parameters_get_service_class
     nw_parameters_set_multipath_service
     nw_parameters_get_multipath_service
+    nw_parameters_copy_default_protocol_stack
     nw_protocol_stack_prepend_application_protocol
     nw_protocol_stack_clear_application_protocols
     nw_protocol_stack_copy_transport_protocol
