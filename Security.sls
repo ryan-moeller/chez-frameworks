@@ -16,16 +16,24 @@
 ;; Based on Apple's Security/Security.h
 (library
   (Security)
-  (export AuthorizationRef)
+  (export
+    AuthorizationRef
+    sec_protocol_options_t
+    sec_protocol_metadata_t)
   (import (chezscheme))
 
   ;;----------;;
   ;; Security ;;
   ;;==========;;
 
+  ;; XXX: This is just a minimal collection of types required elsewhere for now.
+
   ;;
   ;; Types
   ;;
 
-  (define-ftype AuthorizationRef void*)
+  (define-ftype
+    [AuthorizationRef void*]
+    [sec_protocol_options_t void*]
+    [sec_protocol_metadata_t void*])
   )

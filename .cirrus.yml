@@ -12,3 +12,5 @@ task:
     # XXX: It works without this on my machine, but not in CI?
     - DYLD_FRAMEWORK_PATH=/System/Library/Frameworks
       chez --script examples/ifaces.ss
+    - DYLD_FRAMEWORK_PATH=/System/Library/Frameworks
+      chez --script examples/network.ss
