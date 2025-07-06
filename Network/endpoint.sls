@@ -38,8 +38,9 @@
     nw_endpoint_get_bonjour_service_domain
     nw_endpoint_create_url
     nw_endpoint_get_url
-    nw_endpoint_copy_txt_record
-    nw_endpoint_get_signature)
+    ;nw_endpoint_copy_txt_record
+    ;nw_endpoint_get_signature
+    )
   (import
     (chezscheme)
     (Network interface)
@@ -120,10 +121,12 @@
   (define nw_endpoint_get_url
     (foreign-procedure "nw_endpoint_get_url"
 		       (nw_endpoint_t) string))
+  #|
   (define nw_endpoint_copy_txt_record
     (foreign-procedure "nw_endpoint_copy_txt_record"
 		       (nw_endpoint_t) nw_txt_record_t))
   (define nw_endpoint_get_signature
     (foreign-procedure "nw_endpoint_get_signature"
 		       (nw_endpoint_t (* size_t)) (* unsigned-8)))
+  |#
   )

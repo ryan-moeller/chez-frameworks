@@ -38,7 +38,7 @@
     nw_parameters_expired_dns_behavior_default
     nw_parameters_expired_dns_behavior_allow
     nw_parameters_expired_dns_behavior_prohibit
-    nw_parameters_create_application_service
+    ;nw_parameters_create_application_service
     nw_parameters_create
     nw_parameters_copy
     nw_parameters_set_privacy_context
@@ -80,8 +80,9 @@
     nw_parameters_get_prefer_no_proxy
     nw_parameters_set_expired_dns_behavior
     nw_parameters_get_expired_dns_behavior
-    nw_parameters_set_requires_dnssec_validation
-    nw_parameters_requires_dnssec_validation)
+    ;nw_parameters_set_requires_dnssec_validation
+    ;nw_parameters_requires_dnssec_validation
+    )
   (import
     (chezscheme)
     (Network protocol_options)
@@ -137,9 +138,11 @@
   ;; Functions
   ;;
 
+  #|
   (define nw_parameters_create_application_service
     (foreign-procedure "nw_parameters_create_application_service"
 		       () nw_parameters_t))
+  |#
   (define nw_parameters_create
     (foreign-procedure "nw_parameters_create"
 		       () nw_parameters_t))
@@ -263,10 +266,12 @@
   (define nw_parameters_get_expired_dns_behavior
     (foreign-procedure "nw_parameters_get_expired_dns_behavior"
 		       (nw_parameters_t) nw_parameters_expired_dns_behavior_t))
+  #|
   (define nw_parameters_set_requires_dnssec_validation
     (foreign-procedure "nw_parameters_set_requires_dnssec_validation"
 		       (nw_parameters_t boolean) void))
   (define nw_parameters_requires_dnssec_validation
     (foreign-procedure "nw_parameters_requires_dnssec_validation"
 		       (nw_parameters_t) boolean))
+  |#
   )
