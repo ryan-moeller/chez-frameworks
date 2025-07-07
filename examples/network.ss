@@ -1,4 +1,3 @@
-(import (CoreFoundation))
 (import (Network))
 
 (define endpoint (nw_endpoint_create_host "localhost" "1337"))
