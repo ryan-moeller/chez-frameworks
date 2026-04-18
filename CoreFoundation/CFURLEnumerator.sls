@@ -50,7 +50,7 @@
   ;;=================;;
 
   (define init
-    (load-shared-object "CoreFoundation.framework/CFURLEnumerator"))
+    (load-shared-object "/System/Library/Frameworks/CoreFoundation.framework/CFURLEnumerator"))
 
   ;; XXX: Deprecated APIs not exposed.
 

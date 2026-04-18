@@ -45,7 +45,7 @@
   ;;================;;
 
   (define init
-    (load-shared-object "SystemConfiguration.framework/SystemConfiguration"))
+    (load-shared-object "/System/Library/Frameworks/SystemConfiguration.framework/SystemConfiguration"))
 
   ;;
   ;; Types

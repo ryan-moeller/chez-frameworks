@@ -58,7 +58,7 @@
   ;;==============;;
 
   (define init
-    (load-shared-object "CoreFoundation.framework/CoreFoundation"))
+    (load-shared-object "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation"))
 
   ;;
   ;; Types

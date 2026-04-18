@@ -35,7 +35,7 @@
   ;;=================;;
 
   (define init
-    (load-shared-object "Network.framework/Network"))
+    (load-shared-object "/System/Library/Frameworks/Network.framework/Network"))
 
   ;; XXX: Blocks APIs not exposed.
 
