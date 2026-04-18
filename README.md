@@ -1,6 +1,7 @@
 Chez Frameworks
 ===============
 
+[![macOS Tahoe Build Status](https://api.cirrus-ci.com/github/ryan-moeller/chez-frameworks.svg?branch=main&task=tahoe)](https://cirrus-ci.com/github/ryan-moeller/chez-frameworks)
 [![macOS Sequoia Build Status](https://api.cirrus-ci.com/github/ryan-moeller/chez-frameworks.svg?branch=main&task=sequoia)](https://cirrus-ci.com/github/ryan-moeller/chez-frameworks)
 [![macOS Sonoma Build Status](https://api.cirrus-ci.com/github/ryan-moeller/chez-frameworks.svg?branch=main&task=sonoma)](https://cirrus-ci.com/github/ryan-moeller/chez-frameworks)
 

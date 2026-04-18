@@ -1,5 +1,8 @@
 task:
   matrix:
+    - name: tahoe
+      macos_instance:
+        image: ghcr.io/cirruslabs/macos-runner:tahoe
     - name: sequoia
       macos_instance:
         image: ghcr.io/cirruslabs/macos-runner:sequoia
